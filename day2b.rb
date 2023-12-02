@@ -127,14 +127,14 @@ def getColours(game, colour)
   return 0
 end
 
-possiblesum = 0
+rt = 0
 
 DATA.each_line do |line|
   line.chomp!
   matches = line.match(/Game (\d+): (.*)/)
   id = matches[1]
   games = matches[2].split(";")
-  impossible = false
+  minreds = mingreens = minblues = 0
 
   games.each{|r|
     r.strip!
@@ -142,12 +142,14 @@ DATA.each_line do |line|
     reds = getColours(r, "red")
     greens = getColours(r, "green")
     blues = getColours(r, "blue")
-    if reds > redinbag || greens > greeninbag || blues > blueinbag
-      impossible = true
-    end
-    puts "Round: [#{r}] reds: [#{reds}] greens: [#{greens}] blues: [#{blues}] impossible? [#{impossible}]"
+    minreds = reds if reds > minreds
+    mingreens = greens if greens > mingreens
+    minblues = blues if blues > minblues
+
+    # puts "Round: [#{r}] reds: [#{reds}] greens: [#{greens}] blues: [#{blues}]"
   }
-  puts "Game was impossible? [#{impossible}]\n---\n"
-  possiblesum += id.to_i unless impossible
+  product = minreds*minblues*mingreens
+  puts "Minreds: [#{minreds}], minblues [#{minblues}], mingreends: [#{mingreens}]. Product: [#{product}]"
+  rt += product
 end
-puts "Possible ID sum: [#{possiblesum}]"
+puts "Total of products: [#{rt}]"
