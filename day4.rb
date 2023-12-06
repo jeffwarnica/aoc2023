@@ -255,7 +255,7 @@ else
   raise "WTF?"
 end
 
-@DEBUG = true
+@DEBUG = false
 runningPoints = 0
 cardDetails = {}
 
@@ -311,7 +311,7 @@ totalCards = 0
 for c in 1..cardDetails.keys.max
   thisCardCount = 1 + cardDetails[c][:copies]
   totalCards += thisCardCount
-  puts "Card [#{c}] has a total of [#{thisCardCount}] copies"
+  puts "Card [#{c}] has a total of [#{thisCardCount}] copies" if @DEBUG
 end
 
 puts cardDetails if @DEBUG
