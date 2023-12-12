@@ -10,6 +10,7 @@ def parse()
   fname = "data/#{$DAY}_#{$MODE}_A.data" #always A for today
   content = File.open(fname).readlines
   content.each do |line|
+    line.chomp!
     puts line if $DEBUG
   end
 end
